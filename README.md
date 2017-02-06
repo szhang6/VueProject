@@ -1,2 +1,2 @@
 # VueProject
-This is a project which conclud some files that using vue.js for the development.
+This is a project which conclude files that using Vue.js for the development.
