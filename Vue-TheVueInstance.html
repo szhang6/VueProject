@@ -3,9 +3,22 @@
 	<head>
 		<meta charset="UTF-8">
 		<script src="https://unpkg.com/vue/dist/vue.js"></script>
+		<script src="https://unpkg.com/axios@0.12.0/dist/axios.min.js"></script>
+		<script src="https://unpkg.com/lodash@4.13.1/lodash.min.js"></script>
 	</head>
 	<body>
 		<div id="example"></div>
+		<div id="example-2">
+			<p>Original Message: {{ message }}</p>
+			<p>Computed reversed message: {{ reversedMessage }}</p>
+		</div>
+		<div id="watch-example">
+			<p>
+				Ask a yes/no question:
+				<input v-model="question" />
+			</p>
+			<p>{{ answer }}</p>
+		</div>
 		<script>
 			var data = { a: 1 };
 			var vm = new Vue({
@@ -24,6 +37,63 @@
 			console.log( vm.$data === data ); // true
 			console.log( vm.$el === document.getElementById('example') ); // true
 			
+			// Instance Lifecycle Hooks
+			var vm2 = new Vue({
+				data: {
+					a: 1
+				},
+				created: function () {
+					console.log('a is ' + this.a); // a is 1
+				}
+			});
+
+			// Computed Properties
+			var vm3 = new Vue({
+				el: '#example-2',
+				data: {
+					message: 'Hello'
+				},
+				computed: {
+					reversedMessage: function () {
+						return reversedMessage = this.message.split('').reverse().join('');
+					}
+				}
+			});
+
+			// Watchers
+			var watchExampleVM = new Vue({
+				el: '#watch-example',
+				data: {
+					question: '',
+					answer: 'I cannot give you an answer until you ask a question'
+				},
+				watch: {
+					question: function (newQuestion) {
+						this.answer = 'Waiting for you to stop typing',
+						this.getAnswer();
+					}
+				},
+				methods: {
+					getAnswer: _.debounce(
+						function () {
+							var vm = this;
+							if (this.question.indexOf('?') === '-1') {
+								vm.answer = 'Question usually contains a question mark';
+								return;
+							}
+							vm.answer = 'Thinking...';
+							axios.get('https://yesno.wtf/api')
+								.then(function (response) {
+									vm.answer = _.capitalize(response.data.answer);
+								})
+								.catch(function (error) {
+									vm.answer = 'Error: Could not reach the API' + error
+								})
+						},
+						500
+					)
+				}
+			});
 		</script>
 	</body>
 </html>
