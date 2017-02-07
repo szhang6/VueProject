@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://unpkg.com/vue/dist/vue.js"></script>
+	</head>
+	<body>
+		<div id="example-1">
+			<li v-for="item in items">
+				{{ item.message }}
+			</li>
+		</div>
+		<ul id="example-2">
+			<li v-for="(item, index) in items">
+				{{ parentMessage }} - {{ index }} - {{ item.message }}
+			</li>
+		</ul>
+		<ul id="example-3">
+			<li v-for="item of items">
+				{{ item.message }}
+			</li>
+		</ul>
+		<ul id="example-4">
+			<template v-for="item in items">
+				<li>{{ item.msg }}</li>
+			</template>
+		</ul>
+		<ul id="repeat-object" class="demo">
+			<li v-for="(value, key, index) in object">
+				{{ index }} - {{ key }} : {{ value }}
+			</li>
+		</ul>
+		<!--This on has issue and it cannot show the one to ten number-->
+		<div>
+			<span v-for="n in 10">{{ n }}</span>
+		</div>
+		<script>
+			var example1 = new Vue({
+				el: '#example-1',
+				data: {
+					items: [
+						{message: 'Foo'},
+						{message: 'Bar'}
+					]
+				}
+			});
+			var example2 = new Vue({
+				el: '#example-2',
+				data: {
+					parentMessage: 'Parent',
+					items: [
+						{message: 'Foo'},
+						{message: 'Bar'}
+					]
+				}
+			});
+			var example3 = new Vue({
+				el: '#example-3',
+				data: {
+					items: [
+						{message: 'I am Foo'},
+						{message: 'I am Bar'}
+					]
+				}
+			});
+			var example4 = new Vue({
+				el: '#example-4',
+				data: {
+					items: [
+						{msg: "Hi Vue"},
+						{msg: "Hi Angular"}
+					]
+				}
+			});
+			var demo = new Vue({
+				el: '#repeat-object',
+				data: {
+					object: {
+						FirstName: 'John',
+						LastName: 'Doe',
+						age: 30
+					}
+				}
+			});
+		</script>
+	</body>
+</html>
