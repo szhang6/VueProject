@@ -1,0 +1,20 @@
+<!DOCTYPE>
+<html>
+	<head>
+		<script src="https://unpkg.com/vue/dist/vue.js"></script>
+	</head>
+	<body>
+		<div class="static" 
+			v-bind:class="{ active: isActive, 'text-danger': hasError }">
+		</div>
+		<script>
+			var vm = new Vue({
+				el: '.static',
+				data: {
+					isActive: true,
+					hasError: false
+				}
+			});
+		</script>
+	</body>
+</html>
