@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://unpkg.com/vue/dist/vue.js"></script>
+	</head>
+	<body>
+		<div id="example">
+			<my-component></my-component>
+		</div>
+		<div id="example-2">
+			<child message="hello!"></child>
+		</div>
+		<div id="example-3">
+			<child my-message="hello Vue!"></child>
+		</div>
+		<script>
+			Vue.component('my-component', {
+				template: '<div>A custom component!</div>'
+			});
+			var example =  new Vue({
+				el: '#example'
+			});
+			Vue.component('child', {
+				props: ['message'],
+				template: '<span>{{ message }}</span>'
+			});
+			var example2 = new Vue({
+				el: '#example-2'
+			});
+			Vue.component('child', {
+				props: ['myMessage'],
+				template: '<span>{{ myMessage }}</span>'
+			});
+			var example3 = new Vue({
+				el: '#example-3'
+			});
+		</script>
+	</body>
+</html>
